@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- START: ^ x³ ∛ π rnd -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_power"
+            android:text="^"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_cube"
+            android:text="x³"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_cube_root"
+            android:text="∛"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_pi"
+            android:text="π"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_rnd"
+            android:text="rnd"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+        </LinearLayout>
+        <!-- END: ^ x³ ∛ π rnd -->
+
+    <!-- START: 1/x x² √ mod % -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_reciprocal"
+            android:text="1/x"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_square"
+            android:text="x²"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_square_root"
+            android:text="√"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_modulo"
+            android:text="mod"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_percent"
+            android:text="%"
+            android:layout_weight="1"
+            android:minHeight="80dp"
+            android:textSize="25sp"
+            android:background="@color/colorNumBtnBackground"
+            android:textColor="@color/colorNumBtnText"/>
+    </LinearLayout>
+    <!-- END: 1/x x² √ mod % -->
+</LinearLayout>

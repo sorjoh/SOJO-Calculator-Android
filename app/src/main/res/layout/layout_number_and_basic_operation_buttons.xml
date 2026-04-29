@@ -1,75 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <!-- START: 7 8 9 DEL CE/C -->
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_seven"
             android:text="7"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText"
+            tools:ignore="NestedWeights" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_eight"
             android:text="8"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_nine"
             android:text="9"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_delete"
             android:text="DEL"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorRemoveFunctionBtnBackground"
+            android:textColor="@color/colorRemoveFunctionBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_clear"
             android:text="CE/C"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText"/>
+            android:background="@color/colorRemoveFunctionBtnBackground"
+            android:textColor="@color/colorRemoveFunctionBtnText"/>
     </LinearLayout>
     <!-- END: 7 8 9 DEL CE/C -->
 
@@ -77,68 +80,69 @@
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_four"
             android:text="4"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_five"
             android:text="5"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_six"
             android:text="6"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_multiply"
             android:text="×"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorBasicOperationBtnBackground"
+            android:textColor="@color/colorBasicOperatorBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_divide"
             android:text="÷"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText"/>
+            android:background="@color/colorBasicOperationBtnBackground"
+            android:textColor="@color/colorBasicOperatorBtnText"/>
     </LinearLayout>
     <!-- END: 4 5 6 * / -->
 
@@ -146,68 +150,69 @@
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_one"
             android:text="1"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_two"
             android:text="2"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_three"
             android:text="3"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_add"
             android:text="+"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorBasicOperationBtnBackground"
+            android:textColor="@color/colorBasicOperatorBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_subtract"
             android:text="-"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText"/>
+            android:background="@color/colorBasicOperationBtnBackground"
+            android:textColor="@color/colorBasicOperatorBtnText"/>
     </LinearLayout>
     <!-- END: 1 2 3 + - -->
 
@@ -215,57 +220,58 @@
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_zero"
             android:text="0"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_dot"
             android:text=","
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_toggle"
             android:text="+/-"
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText" />
+            android:background="@color/colorNumberBtnBackground"
+            android:textColor="@color/colorNumberBtnText" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:id="@+id/btn_equal"
             android:text="="
-            android:layout_weight="1"
             android:minHeight="80dp"
             android:minWidth="150dp"
             android:textSize="25sp"
-            android:background="@color/colorNumBtnBackground"
-            android:textColor="@color/colorNumBtnText"/>
+            android:background="@color/colorEqualBtnBackground"
+            android:textColor="@color/colorEqualBtnText"/>
     </LinearLayout>
     <!-- END: 0 , +/- = -->
 </LinearLayout>

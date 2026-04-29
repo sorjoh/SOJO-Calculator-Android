@@ -2,27 +2,27 @@
 <!-- START: Result frame -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="top"
-    android:minHeight="200dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorDisplayBackground">
 
     <!-- START: Current and previous result -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:gravity="top"
             android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -31,24 +31,28 @@
                     android:layout_height="wrap_content"
                     android:text="M"
                     android:textAlignment="textStart"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp"
+                    android:textColor="@color/colorMemoryStatusText"/>
 
                 <TextView
                     android:id="@+id/tv_previous_result"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="1+2+3+4"
                     android:textAlignment="textEnd"
-                    android:textSize="30sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/colorDisplayText"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_current_result"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="bottom|end"
                 android:text="10"
-                android:textSize="20sp"/>
+                android:textSize="30sp"
+                android:textColor="@color/colorDisplayText"/>
         </LinearLayout>
     </LinearLayout>
     <!-- END: Current and previous result -->

@@ -2,62 +2,62 @@
 <!-- START: MC MR MS M+ M- -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/btn_memory_clear"
-    android:text="MC"
-    android:layout_weight="1"
-    android:minHeight="80dp"
-    android:textSize="25sp"
-    android:background="@color/colorNumBtnBackground"
-    android:textColor="@color/colorNumBtnText"/>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btn_memory_clear"
+        android:text="MC"
+        android:layout_weight="1"
+        android:minHeight="80dp"
+        android:textSize="25sp"
+        android:background="@color/colorMemoryFunctionBtnBackground"
+        android:textColor="@color/colorMemoryFunctionBtnText"/>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/btn_memory_recall"
-    android:text="MR"
-    android:layout_weight="1"
-    android:minHeight="80dp"
-    android:textSize="25sp"
-    android:background="@color/colorNumBtnBackground"
-    android:textColor="@color/colorNumBtnText"/>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btn_memory_recall"
+        android:text="MR"
+        android:layout_weight="1"
+        android:minHeight="80dp"
+        android:textSize="25sp"
+        android:background="@color/colorMemoryFunctionBtnBackground"
+        android:textColor="@color/colorMemoryFunctionBtnText"/>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/btn_memory_store"
-    android:text="MS"
-    android:layout_weight="1"
-    android:minHeight="80dp"
-    android:textSize="25sp"
-    android:background="@color/colorNumBtnBackground"
-    android:textColor="@color/colorNumBtnText"/>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btn_memory_store"
+        android:text="MS"
+        android:layout_weight="1"
+        android:minHeight="80dp"
+        android:textSize="25sp"
+        android:background="@color/colorMemoryFunctionBtnBackground"
+        android:textColor="@color/colorMemoryFunctionBtnText"/>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/btn_memory_add"
-    android:text="M+"
-    android:layout_weight="1"
-    android:minHeight="80dp"
-    android:textSize="25sp"
-    android:background="@color/colorNumBtnBackground"
-    android:textColor="@color/colorNumBtnText"/>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btn_memory_add"
+        android:text="M+"
+        android:layout_weight="1"
+        android:minHeight="80dp"
+        android:textSize="25sp"
+        android:background="@color/colorMemoryFunctionBtnBackground"
+        android:textColor="@color/colorMemoryFunctionBtnText"/>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/btn_memory_subtract"
-    android:text="M-"
-    android:layout_weight="1"
-    android:minHeight="80dp"
-    android:textSize="25sp"
-    android:background="@color/colorNumBtnBackground"
-    android:textColor="@color/colorNumBtnText"/>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btn_memory_subtract"
+        android:text="M-"
+        android:layout_weight="1"
+        android:minHeight="80dp"
+        android:textSize="25sp"
+        android:background="@color/colorMemoryFunctionBtnBackground"
+        android:textColor="@color/colorMemoryFunctionBtnText"/>
 </LinearLayout>
-    <!-- END: MC MR MS M+ M- -->
+<!-- END: MC MR MS M+ M- -->

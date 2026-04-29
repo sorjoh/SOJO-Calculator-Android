@@ -7,31 +7,31 @@
 
     <Button style="@style/button"
         android:id="@+id/btn_memory_clear"
-        android:text="MC"
+        android:text="@string/memory_clear_text"
         android:background="@color/colorMemoryFunctionBtnBackground"
         android:textColor="@color/colorMemoryFunctionBtnText"/>
 
     <Button style="@style/button"
         android:id="@+id/btn_memory_recall"
-        android:text="MR"
+        android:text="@string/memory_recall_text"
         android:background="@color/colorMemoryFunctionBtnBackground"
         android:textColor="@color/colorMemoryFunctionBtnText"/>
 
     <Button style="@style/button"
         android:id="@+id/btn_memory_store"
-        android:text="MS"
+        android:text="@string/memory_store_text"
         android:background="@color/colorMemoryFunctionBtnBackground"
         android:textColor="@color/colorMemoryFunctionBtnText"/>
 
     <Button style="@style/button"
         android:id="@+id/btn_memory_add"
-        android:text="M+"
+        android:text="@string/memory_add_text"
         android:background="@color/colorMemoryFunctionBtnBackground"
         android:textColor="@color/colorMemoryFunctionBtnText"/>
 
     <Button style="@style/button"
         android:id="@+id/btn_memory_subtract"
-        android:text="M-"
+        android:text="@string/memory_subtract_text"
         android:background="@color/colorMemoryFunctionBtnBackground"
         android:textColor="@color/colorMemoryFunctionBtnText"/>
 </LinearLayout><!-- END: MC MR MS M+ M- -->

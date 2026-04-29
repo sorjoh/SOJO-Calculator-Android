@@ -14,32 +14,32 @@
 
         <Button style="@style/button"
             android:id="@+id/btn_power"
-            android:text="^"
+            android:text="@string/power_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"
             tools:ignore="NestedWeights" />
 
         <Button style="@style/button"
             android:id="@+id/btn_cube"
-            android:text="x³"
+            android:text="@string/cube_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
         <Button style="@style/button"
             android:id="@+id/btn_cube_root"
-            android:text="∛"
+            android:text="@string/cube_root_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
         <Button style="@style/button"
             android:id="@+id/btn_pi"
-            android:text="π"
+            android:text="@string/pi_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
         <Button style="@style/button"
             android:id="@+id/btn_rnd"
-            android:text="rnd"
+            android:text="@string/random_text"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
         </LinearLayout>
@@ -54,31 +54,31 @@
 
         <Button style="@style/button"
             android:id="@+id/btn_reciprocal"
-            android:text="1/x"
+            android:text="@string/reciprocal_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
         <Button style="@style/button"
             android:id="@+id/btn_square"
-            android:text="x²"
+            android:text="@string/square_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
         <Button style="@style/button"
             android:id="@+id/btn_square_root"
-            android:text="√"
+            android:text="@string/square_root_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
         <Button style="@style/button"
             android:id="@+id/btn_modulo"
-            android:text="mod"
+            android:text="@string/modulo_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
         <Button style="@style/button"
             android:id="@+id/btn_percent"
-            android:text="%"
+            android:text="@string/percent_sign"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
     </LinearLayout>

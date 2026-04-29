@@ -29,7 +29,7 @@
                     android:id="@+id/tv_memory_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="M"
+                    android:text="@string/memory_status_text"
                     android:textAlignment="textStart"
                     android:textSize="30sp"
                     android:textColor="@color/colorMemoryStatusText"/>
@@ -38,7 +38,7 @@
                     android:id="@+id/tv_previous_result"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="1+2+3+4"
+                    android:text="@string/default_previous_result_text"
                     android:textAlignment="textEnd"
                     android:textSize="20sp"
                     android:textColor="@color/colorDisplayText"/>
@@ -50,7 +50,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="bottom|end"
-                android:text="10"
+                android:text="@string/default_current_result_text"
                 android:textSize="30sp"
                 android:textColor="@color/colorDisplayText"/>
         </LinearLayout>

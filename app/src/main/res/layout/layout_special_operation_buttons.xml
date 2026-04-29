@@ -12,59 +12,34 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+        <Button style="@style/button"
             android:id="@+id/btn_power"
             android:text="^"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"
             tools:ignore="NestedWeights" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_cube"
             android:text="x³"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_cube_root"
             android:text="∛"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_pi"
             android:text="π"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_rnd"
             android:text="rnd"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
         </LinearLayout>
@@ -77,58 +52,33 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_reciprocal"
             android:text="1/x"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_square"
             android:text="x²"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_square_root"
             android:text="√"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_modulo"
             android:text="mod"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button style="@style/button"
             android:id="@+id/btn_percent"
             android:text="%"
-            android:layout_weight="1"
-            android:minHeight="80dp"
-            android:textSize="25sp"
             android:background="@color/colorSpecialFunctionBtnBackground"
             android:textColor="@color/colorSpecialFunctionBtnText"/>
     </LinearLayout>

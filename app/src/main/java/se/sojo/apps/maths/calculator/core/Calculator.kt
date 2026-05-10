@@ -39,7 +39,7 @@ class Calculator {
         var numberFormat: NumberFormat = NumberFormat.getNumberInstance(Locale("en", "US"))
 
         // Set the base font size
-        const val BASE_FONT_SIZE: Float = 36f
+        const val BASE_FONT_SIZE: Float = 24f
 
         fun getOperatorSign(op: Operator): String {
             return when (op) {

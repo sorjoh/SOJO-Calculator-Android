@@ -74,14 +74,14 @@
         <Button style="@style/button"
             android:id="@+id/btn_multiply"
             android:text="@string/multiply_sign"
-            android:textSize="42sp"
+            android:textSize="24sp"
             android:background="@color/colorBasicOperationBtnBackground"
             android:textColor="@color/colorBasicOperatorBtnText" />
 
         <Button style="@style/button"
             android:id="@+id/btn_divide"
             android:text="@string/divide_sign"
-            android:textSize="42sp"
+            android:textSize="24sp"
             android:background="@color/colorBasicOperationBtnBackground"
             android:textColor="@color/colorBasicOperatorBtnText"/>
     </LinearLayout>
@@ -116,14 +116,14 @@
         <Button style="@style/button"
             android:id="@+id/btn_add"
             android:text="@string/add_sign"
-            android:textSize="42sp"
+            android:textSize="24sp"
             android:background="@color/colorBasicOperationBtnBackground"
             android:textColor="@color/colorBasicOperatorBtnText" />
 
         <Button style="@style/button"
             android:id="@+id/btn_subtract"
             android:text="@string/subtract_sign"
-            android:textSize="42sp"
+            android:textSize="24sp"
             android:background="@color/colorBasicOperationBtnBackground"
             android:textColor="@color/colorBasicOperatorBtnText"/>
     </LinearLayout>
@@ -158,7 +158,7 @@
         <Button style="@style/button"
             android:id="@+id/btn_equal"
             android:text="@string/equal_sign"
-            android:textSize="42sp"
+            android:textSize="24sp"
             android:minWidth="150dp"
             android:layout_weight="2"
             android:background="@color/colorEqualBtnBackground"

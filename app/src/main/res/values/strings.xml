@@ -34,7 +34,7 @@
     <string name="add_sign">+</string>
     <string name="subtract_sign">-</string>
     <string name="number_zero_char">0</string>
-    <string name="dot_char">,</string>
+    <string name="dot_char">.</string>
     <string name="toggle_sign">+/-</string>
     <string name="equal_sign">=</string>
 </resources>

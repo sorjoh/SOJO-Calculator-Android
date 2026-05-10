@@ -80,7 +80,6 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
 
             // Set the status of Clear Entry to false
             hasResult = false
-            hasMemoryRecall = false
 
             // Set previous operation
             previousOperator = currentOperator
@@ -423,7 +422,6 @@ private fun MainActivity.clearButtonAction(motionEvent: MotionEvent): Boolean {
                 resetValues()
 
                 hasResult = false
-                hasMemoryRecall = false
             } else {
                 // Clear the entry only
 
@@ -432,8 +430,6 @@ private fun MainActivity.clearButtonAction(motionEvent: MotionEvent): Boolean {
                     tvPreviousResult?.text = ""
                     hasResult = false
                 }
-
-                hasMemoryRecall = false
 
                 // Set CE to true
                 clearEntry = true
@@ -456,7 +452,6 @@ private fun MainActivity.deleteButtonAction(motionEvent: MotionEvent): Boolean {
             if (hasResult) {
                 tvPreviousResult?.text = ""
                 hasResult = false
-                hasMemoryRecall = false
             }
 
             // Delete number from the end if no calculation has been made
@@ -773,6 +768,17 @@ private fun MainActivity.displayResult(firstDisplayValue: String, secondDisplayV
 
     // Replace all none minus characters with proper one
     tvCurrentResult?.text = tvCurrentResult?.text.toString().cleanUpMinusSign()
+
+    // Fix if the formated double value is .0
+    if (tvCurrentResult?.text.toString() == ".0") {
+        tvCurrentResult?.text = "0"
+    }
+
+    if (tvPreviousResult?.text.toString().substring(0, 3) == ".0 ") {
+        tvPreviousResult?.text = ""
+        tvCurrentResult?.text = "0"
+        resetValues()
+    }
 
     adjustLabelFont(tvPreviousResult)
     adjustLabelFont(tvCurrentResult)

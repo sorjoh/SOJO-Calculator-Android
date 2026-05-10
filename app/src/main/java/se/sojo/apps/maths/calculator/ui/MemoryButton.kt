@@ -7,6 +7,7 @@ import android.widget.Button
 import se.sojo.apps.maths.calculator.MainActivity
 import se.sojo.apps.maths.calculator.R
 import se.sojo.apps.maths.calculator.core.Calculator
+import se.sojo.apps.maths.calculator.core.Calculator.Companion.DECIMAL_SEPARATOR
 import se.sojo.apps.maths.calculator.core.adjustLabelFont
 import se.sojo.apps.maths.calculator.core.cleanUpDecimalSeparator
 import se.sojo.apps.maths.calculator.core.cleanUpMinusSign
@@ -42,24 +43,48 @@ private fun MainActivity.memoryButtonAction(btn: Button, motionEvent: MotionEven
 
             val currentValue: String = input
 
-            // Reset the memory recall status
             hasMemoryRecall = false
 
             when (btn.text) {
                 // === MEMORY CLEAR ===
                 "MC" -> {
-
                     // Clear the memory and hide the memory label
                     memoryValue = 0.0
+                    hasMemoryStatus = false
                     tvMemoryStatus?.visibility = View.GONE
                 }
 
                 // === MEMORY RECALL ===
                 "MR" -> {
-                    // Show the memory value
-                    tvCurrentResult?.text = Calculator.formatValue(memoryValue.toString())
-                    // Set memory recall status to true
                     hasMemoryRecall = true
+                    
+                    // Show the memory value
+                    if (memoryValue == 0.0) {
+                        tvCurrentResult?.text = "0"
+                    } else {
+                        tvCurrentResult?.text = Calculator.formatValue(memoryValue.toString(), true)
+                        //if (currentOperator != Calculator.Operator.NONE || previousOperator != Calculator.Operator.NONE) {
+                        //    tvPreviousResult?.text = ""
+                        //    hasResult = true
+                        //}
+                    }
+
+                    if (hasResult)
+                        tvPreviousResult?.text = ""
+
+                    // Check and add a zero if leading zero is missing when decimal is used
+                    if (tvCurrentResult?.text?.substring(0, 1) == DECIMAL_SEPARATOR) {
+                        tvCurrentResult?.text = buildString {
+                            append("0")
+                            append(tvCurrentResult?.text)
+                        }
+                    }
+                    // Replace 0.0 and -0 with zero only
+                    if (tvCurrentResult?.text.toString() == "0" + DECIMAL_SEPARATOR + "0" || tvCurrentResult?.text.toString() == "−0")
+                        tvCurrentResult?.text = "0"
+
+                    // Replace all none minus characters with proper one
+                    tvCurrentResult?.text = tvCurrentResult?.text.toString().cleanUpMinusSign()
 
                     // Adjust the font size depending on how many numbers
                     adjustLabelFont(tvCurrentResult)
@@ -69,6 +94,7 @@ private fun MainActivity.memoryButtonAction(btn: Button, motionEvent: MotionEven
                 "MS" -> {
                     // Store the current value in memory and show the memory label
                     memoryValue = currentValue.toDouble()
+                    hasMemoryStatus = true
                     tvMemoryStatus?.visibility = View.VISIBLE
                 }
 
@@ -76,6 +102,7 @@ private fun MainActivity.memoryButtonAction(btn: Button, motionEvent: MotionEven
                 "M+" -> {
                     // Add the current value to the memory and show the memory label
                     memoryValue += currentValue.toDouble()
+                    hasMemoryStatus = true
                     tvMemoryStatus?.visibility = View.VISIBLE
                 }
 
@@ -83,6 +110,7 @@ private fun MainActivity.memoryButtonAction(btn: Button, motionEvent: MotionEven
                 "M-" -> {
                     // Subtract the current value to the memory and show the memory label
                     memoryValue -= currentValue.toDouble()
+                    hasMemoryStatus = true
                     tvMemoryStatus?.visibility = View.VISIBLE
                 }
             }

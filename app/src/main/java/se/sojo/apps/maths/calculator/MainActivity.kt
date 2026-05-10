@@ -77,6 +77,7 @@ class MainActivity : ComponentActivity() {
     var hasResult: Boolean = false
 
     // Status indicator if value is stored in memory
+    var hasMemoryStatus: Boolean = false
     var hasMemoryRecall: Boolean = false
 
     // Variables holding current and previous operations
@@ -137,8 +138,84 @@ class MainActivity : ComponentActivity() {
         // Replace decimal separator with current from the system
         btnDot?.text = DECIMAL_SEPARATOR
 
+        if(savedInstanceState != null) {
+            tvPreviousResult?.text = savedInstanceState.getString("PreviousResult")
+            tvCurrentResult?.text = savedInstanceState.getString("CurrentResult")
+
+            hasResult = savedInstanceState.getBoolean("HasResult")
+            hasMemoryStatus = savedInstanceState.getBoolean("HasMemoryStatus")
+            hasMemoryRecall = savedInstanceState.getBoolean("HasMemoryRecall")
+            clearEntry = savedInstanceState.getBoolean("ClearEntry")
+
+            firstValue = savedInstanceState.getDouble("FirstValue")
+            secondValue = savedInstanceState.getDouble("SecondValue")
+            memoryValue = savedInstanceState.getDouble("MemoryValue")
+
+            if (hasMemoryStatus) {
+                tvMemoryStatus?.visibility = View.VISIBLE
+            } else {
+                tvMemoryStatus?.visibility = View.GONE
+            }
+            previousOperator = when (savedInstanceState.getString("PreviousOperator")) {
+                "ADD" -> Calculator.Operator.ADD
+                "SUBTRACT" -> Calculator.Operator.SUBTRACT
+                "MULTIPLY" -> Calculator.Operator.MULTIPLY
+                "DIVIDE" -> Calculator.Operator.DIVIDE
+                "MODULO" -> Calculator.Operator.MODULO
+                "PERCENT" -> Calculator.Operator.PERCENT
+                "SQUARE" -> Calculator.Operator.SQUARE
+                "CUBE" -> Calculator.Operator.CUBE
+                "PI" -> Calculator.Operator.PI
+                "POWER" -> Calculator.Operator.POWER
+                "SQUARE_ROOT" -> Calculator.Operator.SQUARE_ROOT
+                "CUBE_ROOT" -> Calculator.Operator.CUBE_ROOT
+                "RECIPROCAL" -> Calculator.Operator.RECIPROCAL
+                "RND" -> Calculator.Operator.RND
+                "EQUALS" -> Calculator.Operator.EQUALS
+                else -> Calculator.Operator.NONE
+            }
+
+            currentOperator = when (savedInstanceState.getString("CurrentOperator")) {
+                "ADD" -> Calculator.Operator.ADD
+                "SUBTRACT" -> Calculator.Operator.SUBTRACT
+                "MULTIPLY" -> Calculator.Operator.MULTIPLY
+                "DIVIDE" -> Calculator.Operator.DIVIDE
+                "MODULO" -> Calculator.Operator.MODULO
+                "PERCENT" -> Calculator.Operator.PERCENT
+                "SQUARE" -> Calculator.Operator.SQUARE
+                "CUBE" -> Calculator.Operator.CUBE
+                "PI" -> Calculator.Operator.PI
+                "POWER" -> Calculator.Operator.POWER
+                "SQUARE_ROOT" -> Calculator.Operator.SQUARE_ROOT
+                "CUBE_ROOT" -> Calculator.Operator.CUBE_ROOT
+                "RECIPROCAL" -> Calculator.Operator.RECIPROCAL
+                "RND" -> Calculator.Operator.RND
+                "EQUALS" -> Calculator.Operator.EQUALS
+                else -> Calculator.Operator.NONE
+            }
+        }
+
         adjustLabelFont(tvPreviousResult)
         adjustLabelFont(tvCurrentResult)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("PreviousResult", tvPreviousResult?.text.toString())
+        outState.putString("CurrentResult", tvCurrentResult?.text.toString())
+
+        outState.putBoolean("HasResult", hasResult)
+        outState.putBoolean("HasMemoryStatus", hasMemoryStatus)
+        outState.putBoolean("HasMemoryRecall", hasMemoryRecall)
+        outState.putBoolean("ClearEntry", clearEntry)
+
+        outState.putDouble("FirstValue", firstValue)
+        outState.putDouble("SecondValue", secondValue)
+        outState.putDouble("MemoryValue", memoryValue)
+
+        outState.putString("PreviousOperator", previousOperator.toString())
+        outState.putString("CurrentOperator", currentOperator.toString())
     }
 
     // Hide top- and bottom bar

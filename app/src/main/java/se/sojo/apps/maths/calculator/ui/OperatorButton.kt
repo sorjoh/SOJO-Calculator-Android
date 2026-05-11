@@ -769,15 +769,25 @@ private fun MainActivity.displayResult(firstDisplayValue: String, secondDisplayV
     // Replace all none minus characters with proper one
     tvCurrentResult?.text = tvCurrentResult?.text.toString().cleanUpMinusSign()
 
-    // Fix if the formated double value is .0
-    if (tvCurrentResult?.text.toString() == ".0") {
-        tvCurrentResult?.text = "0"
+    // Fix if the formated double value is .0xxxxxx
+    Log.d("SOJO Debug:", "x" + tvCurrentResult?.text.toString() + "x" + tvCurrentResult?.text.toString().substring(0, 1))
+
+    if (tvCurrentResult?.text.toString()[0] == '.') {
+        tvCurrentResult?.text = tvCurrentResult?.text.toString().replace(".", "0$DECIMAL_SEPARATOR")
     }
 
     if (tvPreviousResult?.text.toString().substring(0, 3) == ".0 ") {
         tvPreviousResult?.text = ""
         tvCurrentResult?.text = "0"
         resetValues()
+    }
+
+    if (tvPreviousResult?.text.toString()[0] == '.') {
+        tvPreviousResult?.text = tvPreviousResult?.text.toString().replace(".", "0$DECIMAL_SEPARATOR")
+    }
+
+    if (tvPreviousResult?.text.toString().contains(" .")) {
+        tvPreviousResult?.text = tvPreviousResult?.text.toString().replace(" .", " 0$DECIMAL_SEPARATOR")
     }
 
     adjustLabelFont(tvPreviousResult)

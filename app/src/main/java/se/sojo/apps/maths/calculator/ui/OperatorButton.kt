@@ -11,6 +11,7 @@ import se.sojo.apps.maths.calculator.core.Calculator.Companion.DECIMAL_SEPARATOR
 import se.sojo.apps.maths.calculator.core.adjustLabelFont
 import se.sojo.apps.maths.calculator.core.cleanUpDecimalSeparator
 import se.sojo.apps.maths.calculator.core.cleanUpMinusSign
+import se.sojo.apps.maths.calculator.core.cleanUpZeroValue
 import se.sojo.apps.maths.calculator.core.performHapticFeedback
 import se.sojo.apps.maths.calculator.core.removeThousandSeparator
 import se.sojo.apps.maths.calculator.core.tryParse
@@ -73,6 +74,8 @@ fun MainActivity.setOperationButtons() {
 
 // ========= OPERATOR BUTTON ACTIONS =========
 private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionEvent): Boolean {
+    Log.d("SOJO Debug:", "operationButtonAction -> " + btn.text.toString() + ", " + firstValue.toString() + ", " + secondValue.toString() + ", " + currentOperator.toString() + ", " + previousOperator.toString())
+
     when (motionEvent.action) {
         MotionEvent.ACTION_UP -> {
             // Initialize the result variable and set it to zero
@@ -101,10 +104,12 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
 
             // If both no operator and second value or else both first value and second value are present
             if (currentOperator != Calculator.Operator.NONE && !tvCurrentResult?.text.isNullOrEmpty() && secondValue != 0.0) {
+                Log.d("SOJO Debug:", "operationButtonAction -> IF START")
                 // Calculate and display the result
 
                 // Percent is current operation
                 if (currentOperator == Calculator.Operator.PERCENT) {
+                    Log.d("SOJO Debug:", "operationButtonAction -> IF PERCENT (current)")
                     secondValue = Calculator.calculate(secondValue, 0.0, currentOperator)
                     result = Calculator.calculate(firstValue, secondValue, previousOperator).toString()
 
@@ -122,7 +127,7 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
                         // === DIVIDE BUTTON ===
                         Calculator.Operator.DIVIDE -> result = Calculator.calculate(firstValue, secondValue,Calculator.Operator.DIVIDE).toString()
 
-                        else -> Log.d("SOJO Debug:","Case Else: firstValue=$firstValue, secondValue = $secondValue result=$result, currentOperation=" + Calculator.getOperatorSign(currentOperator) + ", previousOperation=" + Calculator.getOperatorSign(previousOperator))
+                        else -> Log.d("SOJO Debug:","operationButtonAction -> IF PERCENT (current) -> Case Else: firstValue=$firstValue, secondValue = $secondValue result=$result, currentOperation=" + Calculator.getOperatorSign(currentOperator) + ", previousOperation=" + Calculator.getOperatorSign(previousOperator))
                     }
 
                     // Display the result
@@ -136,8 +141,10 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
 
                     // Percent is previous operation
                 } else if (previousOperator == Calculator.Operator.PERCENT) {
+                    Log.d("SOJO Debug:", "operationButtonAction -> IF PERCENT (previous)")
                     // Fix when calculating xx % xx - xx
                     if (currentOperator != Calculator.Operator.PERCENT) {
+                        Log.d("SOJO Debug:", "operationButtonAction -> IF PERCENT (previous->current)")
                         // Set the second value
                         secondValue = input.tryParse()
 
@@ -154,6 +161,7 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
 
                         // Other percent calculation when the percent sign shall be showed
                     } else {
+                        Log.d("SOJO Debug:", "operationButtonAction -> IF ELSE PERCENT (previous->previous)")
                         // Calculate and view the result
                         result = Calculator.calculate(firstValue, secondValue,Calculator.Operator.MULTIPLY).toString()
                         displayResult((firstValue * 100.0).toString(),secondValue.toString(),Calculator.Operator.MULTIPLY, result.toDouble(),"",Calculator.getOperatorSign(Calculator.Operator.PERCENT))
@@ -165,6 +173,7 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
                         resetValues()
                     }
                 } else {
+                    Log.d("SOJO Debug:", "operationButtonAction -> IF ELSE PERCENT (previous)")
                     // Operations with Square, Square Root, Cube, Cube Root and Power, Reciprocal
                     when (currentOperator) {
                         // === SQUARE BUTTON ===
@@ -279,6 +288,7 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
                         }
 
                         else -> {
+                            Log.d("SOJO Debug:", "operationButtonAction -> IF ELSE PERCENT (previous->CASE ELSE)")
                             // Power Button is previous operation
                             if (previousOperator == Calculator.Operator.POWER) {
                                 // Only the first power number is present otherwise add the saved old second value for the second power number
@@ -306,6 +316,7 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
                 }
                 // Power is previous operation
             } else if (previousOperator == Calculator.Operator.POWER) {
+                Log.d("SOJO Debug:", "operationButtonAction -> IF START ELSE IF (previous->POWER)")
                 // Calculate and display the result
                 result = firstValue.pow(secondValue).toString()
                 tvPreviousResult?.text = buildString {
@@ -317,6 +328,7 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
                 // Adjust the font size depending on how many numbers
                 adjustLabelFont(tvPreviousResult)
             } else {
+                Log.d("SOJO Debug:", "operationButtonAction -> IF START ELSE")
                 // Calculate the result
                 result = Calculator.calculate(firstValue, secondValue, currentOperator).toString()
 
@@ -324,20 +336,42 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
                 when (currentOperator) {
                     // === PERCENT OPERATION ===
                     Calculator.Operator.PERCENT -> {
+                        displayResult(firstValue.toString(), "", currentOperator, result.toDouble())
+                        resetValues()
+                        hasResult = true
+
+                        /*
                         // Set the result as first value
                         firstValue = result.toDouble()
                         // Display the result
                         displayResult(firstValue.toString(), "", Calculator.Operator.NONE, 0.0)
+                        */
                     }
 
                     // === SQUARE OPERATION ===
                     Calculator.Operator.SQUARE -> {
-                        // Calculate and show the result
-                        result = Calculator.calculate(firstValue,firstValue,Calculator.Operator.SQUARE).toString()
-                        displayResult(firstValue.toString(),firstValue.toString(),Calculator.Operator.NONE,result.toDouble(),"","²")
+                        if (firstValue == 0.0) {
+                            tvCurrentResult?.text = "0"
+                            tvPreviousResult?.text = ""
+                        } else {
+                            // Calculate and show the result
+                            result = Calculator.calculate(
+                                firstValue,
+                                firstValue,
+                                Calculator.Operator.SQUARE
+                            ).toString()
+                            displayResult(
+                                firstValue.toString(),
+                                firstValue.toString(),
+                                Calculator.Operator.NONE,
+                                result.toDouble(),
+                                "",
+                                "²"
+                            )
 
-                        // Flag that a calculation has been made
-                        hasResult = true
+                            // Flag that a calculation has been made
+                            hasResult = true
+                        }
 
                         // Reset variables
                         resetValues()
@@ -345,12 +379,28 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
 
                     // === CUBE OPERATION ===
                     Calculator.Operator.CUBE -> {
-                        // Calculate and show the result
-                        result = Calculator.calculate(firstValue,firstValue,Calculator.Operator.CUBE).toString()
-                        displayResult(firstValue.toString(),firstValue.toString(),Calculator.Operator.NONE, result.toDouble(),"","³")
+                        if (firstValue == 0.0) {
+                            tvCurrentResult?.text = "0"
+                            tvPreviousResult?.text = ""
+                        } else {
+                            // Calculate and show the result
+                            result = Calculator.calculate(
+                                firstValue,
+                                firstValue,
+                                Calculator.Operator.CUBE
+                            ).toString()
+                            displayResult(
+                                firstValue.toString(),
+                                firstValue.toString(),
+                                Calculator.Operator.NONE,
+                                result.toDouble(),
+                                "",
+                                "³"
+                            )
 
-                        // Flag that a calculation has been made
-                        hasResult = true
+                            // Flag that a calculation has been made
+                            hasResult = true
+                        }
 
                         // Reset variables
                         resetValues()
@@ -358,43 +408,67 @@ private fun MainActivity.operationButtonAction(btn: Button, motionEvent: MotionE
 
                     // === SQUARE ROOT OPERATION ===
                     Calculator.Operator.SQUARE_ROOT, Calculator.Operator.CUBE_ROOT -> {
-                        // Calculate the result
-                        result = Calculator.calculate(firstValue, firstValue, currentOperator).toString()
+                        if (firstValue == 0.0) {
+                            tvCurrentResult?.text = "0"
+                            tvPreviousResult?.text = ""
+                        } else {
+                            // Calculate the result
+                            result = Calculator.calculate(firstValue, firstValue, currentOperator)
+                                .toString()
 
-                        // Display the result
-                        tvPreviousResult?.text = buildString {
-                            append(Calculator.getOperatorSign(currentOperator))
-                            append(Calculator.formatValue(firstValue.toString()))
-                            append(" =")
+                            // Display the result
+                            tvPreviousResult?.text = buildString {
+                                append(Calculator.getOperatorSign(currentOperator))
+                                append(Calculator.formatValue(firstValue.toString()))
+                                append(" =")
+                            }
+                            tvCurrentResult?.text = Calculator.formatValue(result)
+
+                            // Adjust the font size depending on how many numbers
+                            adjustLabelFont(tvPreviousResult)
+                            adjustLabelFont(tvCurrentResult)
+
+                            // Flag that a calculation has been made
+                            hasResult = true
                         }
-                        tvCurrentResult?.text = Calculator.formatValue(result)
-
-                        // Adjust the font size depending on how many numbers
-                        adjustLabelFont(tvPreviousResult)
-                        adjustLabelFont(tvCurrentResult)
-
-                        // Flag that a calculation has been made
-                        hasResult = true
-
                         // Reset variables
                         resetValues()
                     }
 
                     // === RECIPROCAL OPERATION ===
                     Calculator.Operator.RECIPROCAL -> {
-                        // Calculate and show the result
-                        result = Calculator.calculate(1.0, firstValue, Calculator.Operator.DIVIDE).toString()
-                        displayResult("1",firstValue.toString(),Calculator.Operator.DIVIDE, result.toDouble())
+                        if (firstValue == 0.0) {
+                            tvCurrentResult?.text = "0"
+                            tvPreviousResult?.text = ""
+                        } else {
+                            // Calculate and show the result
+                            result =
+                                Calculator.calculate(1.0, firstValue, Calculator.Operator.DIVIDE)
+                                    .toString()
+                            displayResult(
+                                "1",
+                                firstValue.toString(),
+                                Calculator.Operator.DIVIDE,
+                                result.toDouble()
+                            )
 
-                        // Flag that a calculation has been made
-                        hasResult = true
-
+                            // Flag that a calculation has been made
+                            hasResult = true
+                        }
                         // Reset variables
                         resetValues()
                     }
 
-                    else -> displayResult(firstValue.toString(),"",currentOperator,result.toDouble()
-                    )
+                    else -> {
+                        Log.d("SOJO Debug:", "operationButtonAction -> IF START ELSE -> CASE ELSE")
+                        if (firstValue == 0.0 && currentOperator == Calculator.Operator.POWER) {
+                            resetValues()
+                            tvCurrentResult?.text = "0"
+                            tvPreviousResult?.text = ""
+                        } else {
+                            displayResult(firstValue.toString(),"",currentOperator, result.toDouble())
+                        }
+                    }
                 }
             }
         }
@@ -481,6 +555,7 @@ private fun MainActivity.deleteButtonAction(motionEvent: MotionEvent): Boolean {
 
 // ========= EQUAL BUTTON =========
 private fun MainActivity.equalButtonAction(motionEvent: MotionEvent?): Boolean {
+    Log.d("SOJO Debug:", "equalButtonAction -> " + firstValue.toString() + ", " + secondValue.toString() + ", " + currentOperator.toString() + ", " + previousOperator.toString())
     when (motionEvent?.action) {
         MotionEvent.ACTION_UP -> {
             // Save the current values for later use
@@ -495,20 +570,29 @@ private fun MainActivity.equalButtonAction(motionEvent: MotionEvent?): Boolean {
 
             // Make the calculation if no calculation has been done and if there is no zero values
             if (!hasResult) {
+                Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult)")
+
                 var result: String // = "0"
 
-                if (input.toDoubleOrNull() != 0.0) {
-                    // Set the firstValue if it's zero or else set the second value
-                    if (firstValue == 0.0) {
-                        //firstValue = tvCurrentResult?.text.tryParse()
-                        firstValue = input.tryParse()
-                    } else {
-                        //secondValue = tvCurrentResult?.text.tryParse()
+                if (input.toDoubleOrNull() != 0.0 ) {
+                    Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input)")
+                    if (tvPreviousResult?.text.toString()[0] == '0') {
                         secondValue = input.tryParse()
+                    } else {
+                        // Set the firstValue if it's zero or else set the second value
+                        if (firstValue == 0.0) {
+                            //firstValue = tvCurrentResult?.text.tryParse()
+                            firstValue = input.tryParse()
+                        } else {
+                            //secondValue = tvCurrentResult?.text.tryParse()
+                            secondValue = input.tryParse()
+                        }
                     }
 
+                    Log.d("SOJO Debug:", firstValue.toString() + "," + secondValue.toString())
                     // Calculate and show the result
                     if (currentOperator == Calculator.Operator.PERCENT) {
+                        Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input) -> IF currentOperator = PERCENT")
                         result = Calculator.calculate(firstValue, secondValue,Calculator.Operator.MULTIPLY).toString()
 
                         if (previousOperator == Calculator.Operator.NONE)
@@ -517,6 +601,7 @@ private fun MainActivity.equalButtonAction(motionEvent: MotionEvent?): Boolean {
                             displayResult((firstValue * 100).toString(),secondValue.toString(),currentOperator,result.toDouble())
 
                     } else if (currentOperator == Calculator.Operator.POWER) {
+                        Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input) -> Else IF currentOperator = POWER")
                         if (oldSecondValue == 0.0) {
                             result = Calculator.calculate(firstValue, secondValue, currentOperator).toString()
                             tvPreviousResult?.text = buildString {
@@ -526,6 +611,7 @@ private fun MainActivity.equalButtonAction(motionEvent: MotionEvent?): Boolean {
                                 append(" = ")
                             }
                         } else {
+                            Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input) -> IF currentOperator = POWER -> ELSE")
                             val powerValue = Calculator.calculate(oldSecondValue, secondValue,currentOperator).toString()
                             result = Calculator.calculate(firstValue,powerValue.toDouble(),previousOperator).toString()
                             tvPreviousResult?.text = buildString {
@@ -545,16 +631,19 @@ private fun MainActivity.equalButtonAction(motionEvent: MotionEvent?): Boolean {
                         adjustLabelFont(tvPreviousResult)
                         adjustLabelFont(tvCurrentResult)
                     } else {
+                        Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input) -> IF currentOperator -> ELSE")
                         if (currentOperator == Calculator.Operator.NONE) {
                             result = firstValue.toString()
                             displayResult(firstValue.toString(),"0",currentOperator,result.toDouble())
                         } else {
-                            result =Calculator.calculate(firstValue, secondValue, currentOperator).toString()
+                            result = Calculator.calculate(firstValue, secondValue, currentOperator).toString()
                             displayResult(firstValue.toString(),secondValue.toString(),currentOperator,result.toDouble())
                         }
                     }
                 } else {
+                    Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input) -> ELSE")
                     if (currentOperator == Calculator.Operator.POWER) {
+                        Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input) -> ELSE -> currentOperator = POWER")
                         result = firstValue.pow(secondValue).toString()
                         tvPreviousResult?.text = buildString {
                             append(Calculator.formatValue(firstValue.toString()))
@@ -567,6 +656,7 @@ private fun MainActivity.equalButtonAction(motionEvent: MotionEvent?): Boolean {
                         adjustLabelFont(tvPreviousResult)
                         adjustLabelFont(tvCurrentResult)
                     } else {
+                        Log.d("SOJO Debug:", "equaLButtonAction -> IF START (!hasResult) -> IF START(input) -> ELSE -> currentOperator -> ELSE")
                         result = firstValue.toString()
                         if (currentOperator == Calculator.Operator.PERCENT)
                             displayResult((firstValue * 100).toString(),"0",Calculator.Operator.NONE,result.toDouble(),"","%")
@@ -594,12 +684,29 @@ private fun MainActivity.piButtonAction(motionEvent: MotionEvent): Boolean {
             // Set the firstValue if it's zero or else set the second value to PI (3.14159...)
             if (firstValue == 0.0) {
                 if (!hasResult) {
+                //if (!hasResult || tvPreviousResult?.text.toString() == "rnd =") {
                     firstValue = Math.PI
                     displayResult(firstValue.toString(),"0",currentOperator,firstValue,"",Calculator.getOperatorSign(Calculator.Operator.PI))
                     firstValue = 0.0
 
                     // Flag that a calculation has been made
                     hasResult = true
+                } else {
+                    if (tvPreviousResult?.text.toString() == "rnd =") {
+                        firstValue = Math.PI
+                        tvPreviousResult?.text = "π ="
+                        tvCurrentResult?.text = Calculator.formatValue(firstValue.toString())
+                        firstValue = 0.0
+
+                        adjustLabelFont(tvCurrentResult)
+                    } else if (hasResult) {
+                        firstValue = Math.PI
+                        tvPreviousResult?.text = "π ="
+                        tvCurrentResult?.text = Calculator.formatValue(firstValue.toString())
+                        firstValue = 0.0
+
+                        adjustLabelFont(tvCurrentResult)
+                    }
                 }
             } else {
                 secondValue = Math.PI
@@ -663,7 +770,7 @@ private fun MainActivity.toggleButtonAction(motionEvent: MotionEvent): Boolean {
                 tvPreviousResult?.text = ""
 
             // Remove any whitespaces
-            val value: String = tvCurrentResult?.text.toString().trim()
+            val value: String = tvCurrentResult?.text.toString().cleanUpMinusSign().trim()
 
             // Toggle the value
             if (value.startsWith("-"))
@@ -686,109 +793,215 @@ private fun MainActivity.toggleButtonAction(motionEvent: MotionEvent): Boolean {
 private fun MainActivity.displayResult(firstDisplayValue: String, secondDisplayValue: String, operation: Calculator.Operator, result: Double, extraSignRight: String = "", extraSignLeft: String = "") {
     tvCurrentResult?.text = ""
 
+    Log.d("SOJO Debug:", "displayResult -> " + firstDisplayValue + ", " + secondDisplayValue + ", " + operation.toString() + ", " + result.toString())
+
     if (secondDisplayValue.isEmpty()) {
-        if (operation == Calculator.Operator.POWER)
+        Log.d("SOJO Debug:", "displayResult -> IF START")
+        if (operation == Calculator.Operator.POWER) {
+            Log.d("SOJO Debug:", "displayResult -> IF (operation->POWER)")
             tvPreviousResult?.text = buildString {
-                append(Calculator.formatValue(firstDisplayValue, true))
+                append(Calculator.formatValue(firstDisplayValue, true).cleanUpZeroValue())
                 append(Calculator.getOperatorSign(operation))
             }
-        else
-            tvPreviousResult?.text = buildString {
-                append(Calculator.formatValue(firstDisplayValue, true))
-                append(" ")
-                append(Calculator.getOperatorSign(operation))
+            tvCurrentResult?.text = Calculator.formatValue("0", true).cleanUpZeroValue()
+        } else {
+            Log.d("SOJO Debug:", "displayResult -> IF (operation->POWER->ELSE)")
+            if (currentOperator == Calculator.Operator.PERCENT) {
+                Log.d("SOJO Debug:", "displayResult -> IF (operation->POWER->ELSE) IF START")
+                tvPreviousResult?.text = Calculator.formatValue(firstDisplayValue, true).cleanUpZeroValue() + "% ="
+                tvCurrentResult?.text = Calculator.formatValue(result.toString(), true).cleanUpZeroValue()
+            } else {
+                tvPreviousResult?.text = buildString {
+                    Log.d(
+                        "SOJO Debug:",
+                        "displayResult -> IF (operation->POWER->else) IF START -> ELSE" +  Calculator.formatValue(firstDisplayValue, true).cleanUpZeroValue()
+                    )
+                    append(Calculator.formatValue(firstDisplayValue, true).cleanUpZeroValue())
+                    append(" ")
+                    append(Calculator.getOperatorSign(operation))
+                }
+                tvCurrentResult?.text = Calculator.formatValue("0", true).cleanUpZeroValue()
             }
-        tvCurrentResult?.text = Calculator.formatValue("0", true)
+        }
+
     } else if (hasResult) {
+        Log.d("SOJO Debug:", "displayResult -> IF START -> ELSE IF")
         tvPreviousResult?.text = buildString {
-            append(Calculator.formatValue(firstDisplayValue, true))
+            append(Calculator.formatValue(firstDisplayValue, true).cleanUpZeroValue())
             append(" ")
             append(Calculator.getOperatorSign(operation))
             append(" ")
-            append(Calculator.formatValue(secondDisplayValue, true))
+            append(Calculator.formatValue(secondDisplayValue, true).cleanUpZeroValue())
         }
-        tvCurrentResult?.text = Calculator.formatValue(result.toString(), true)
+        tvCurrentResult?.text = Calculator.formatValue(result.toString(), true).cleanUpZeroValue()
     } else {
+        Log.d("SOJO Debug:", "displayResult -> IF START -> ELSE")
         if (operation == Calculator.Operator.NONE) {
-            if (extraSignLeft == Calculator.getOperatorSign(Calculator.Operator.PI))
+            Log.d("SOJO Debug:", "displayResult -> IF START -> ELSE (operation->NONE")
+            if (extraSignLeft == Calculator.getOperatorSign(Calculator.Operator.PI)) {
+                Log.d("SOJO Debug:", "displayResult -> IF START -> ELSE (ExtraSignLeft)")
                 tvPreviousResult?.text = buildString {
                     append(Calculator.getOperatorSign(Calculator.Operator.PI))
                     append(" = ")
                 }
-            else
+            }  else {
+                Log.d("SOJO Debug:", "displayResult -> IF START -> ELSE (operation->NONE->ExtraSignLeft->ELSE)")
                 tvPreviousResult?.text = buildString {
-                    append(Calculator.formatValue(firstDisplayValue, true))
+                    append(Calculator.formatValue(firstDisplayValue, true).cleanUpZeroValue())
                     append(extraSignLeft)
                     append(" =")
                 }
-            tvCurrentResult?.text = Calculator.formatValue(result.toString(), true)
+            }
+            tvCurrentResult?.text = Calculator.formatValue(result.toString(), true).cleanUpZeroValue()
         } else {
+            Log.d("SOJO Debug:", "displayResult -> IF START -> ELSE (operation->NONE->ELSE")
             tvPreviousResult?.text = buildString {
-                append(Calculator.formatValue(firstDisplayValue, true))
+                append(Calculator.formatValue(firstDisplayValue, true).cleanUpZeroValue())
                 append(extraSignLeft)
                 append(" ")
                 append(Calculator.getOperatorSign(operation))
                 append(" ")
-                append(Calculator.formatValue(secondDisplayValue, true))
+                append(Calculator.formatValue(secondDisplayValue, true).cleanUpZeroValue())
                 append(extraSignRight)
                 append(" =")
             }
-            tvCurrentResult?.text = Calculator.formatValue(result.toString(), true)
+            tvCurrentResult?.text = Calculator.formatValue(result.toString(), true).cleanUpZeroValue()
         }
     }
 
-    // Check and add a zero if leading zero is missing when decimal is used
-    if (tvPreviousResult?.text?.substring(0, 1) == DECIMAL_SEPARATOR) {
-        tvPreviousResult?.text = buildString {
-            append("0")
-            append(tvPreviousResult?.text)
+
+    // TODO: 0 - 5 =      ---> 5 - 0 = 5
+    /*
+    try {
+        if (currentOperator != Calculator.Operator.PERCENT && currentOperator != Calculator.Operator.MODULO) {
+            if (tvPreviousResult?.text.toString().trim().cleanUpMinusSign().substring(0, 3) == "-0 " && currentOperator != Calculator.Operator.NONE) {
+                tvCurrentResult?.text = "0"
+                tvPreviousResult?.text = ""
+                resetValues()
+            }
+        } else {
+        try {
+            // Check and add a zero if leading zero is missing when decimal is used
+            if (tvPreviousResult?.text?.substring(0, 1) == DECIMAL_SEPARATOR) {
+                tvPreviousResult?.text = buildString {
+                    append("0")
+                    append(tvPreviousResult?.text)
+                }
+            }
+            // Replace 0.0 with zero only
+            if (tvPreviousResult?.text.toString() == "0" + DECIMAL_SEPARATOR + "0")
+                tvPreviousResult?.text = "0"
+
+            // Replace -0 with 0
+            if (tvPreviousResult?.text.toString().substring(0, 3) == "−0 ")
+                tvPreviousResult?.text = tvPreviousResult?.text.toString().replace("−0 ", "0 ")
+
+            // Replace all none minus characters with proper one
+            tvPreviousResult?.text = tvPreviousResult?.text.toString().cleanUpMinusSign()
+
+            // Check and add a zero if leading zero is missing when decimal is used
+            if (tvCurrentResult?.text?.substring(0, 1) == DECIMAL_SEPARATOR) {
+                tvCurrentResult?.text = buildString {
+                    append("0")
+                    append(tvCurrentResult?.text)
+                }
+            }
+            // Replace 0.0 and -0 with zero only
+            if (tvCurrentResult?.text.toString() == "0" + DECIMAL_SEPARATOR + "0" || tvCurrentResult?.text.toString() == "−0")
+                tvCurrentResult?.text = "0"
+
+            // Replace all none minus characters with proper one
+            tvCurrentResult?.text = tvCurrentResult?.text.toString().cleanUpMinusSign()
+
+            // Fix if the formated double value is .0xxxxxx
+            if (tvCurrentResult?.text.toString()[0] == '.') {
+                tvCurrentResult?.text =
+                    tvCurrentResult?.text.toString().replace(".", "0$DECIMAL_SEPARATOR")
+            }
+
+            if (tvPreviousResult?.text.toString().substring(0, 3) == ".0 ") {
+                tvPreviousResult?.text = ""
+                tvCurrentResult?.text = "0"
+                resetValues()
+            }
+
+            if (tvPreviousResult?.text.toString()[0] == '.') {
+                tvPreviousResult?.text =
+                    tvPreviousResult?.text.toString().replace(".", "0$DECIMAL_SEPARATOR")
+            }
+
+            if (tvPreviousResult?.text.toString().contains(" .")) {
+                tvPreviousResult?.text =
+                    tvPreviousResult?.text.toString().replace(" .", " 0$DECIMAL_SEPARATOR")
+            }
+        } catch (e: Exception) {
+            if (operation == Calculator.Operator.SUBTRACT) {
+                resetValues()
+                tvCurrentResult?.text = "-0"
+                clearEntry = false
+            }
+
+            Log.d(
+                "SOJO Debug:",
+                "catch-> previous: " + tvPreviousResult?.text.toString() + "-x" + previousOperator.toString() + ", current: " + tvCurrentResult?.text.toString() + "-x" + currentOperator.toString()
+            )
         }
     }
-    // Replace 0.0 with zero only
-    if (tvPreviousResult?.text.toString() == "0" + DECIMAL_SEPARATOR + "0")
-        tvPreviousResult?.text = "0"
 
-    // Replace -0 with 0
-    if (tvPreviousResult?.text.toString().substring(0, 3) == "−0 ")
-        tvPreviousResult?.text = tvPreviousResult?.text.toString().replace("−0 ", "0 ")
-
-    // Replace all none minus characters with proper one
-    tvPreviousResult?.text = tvPreviousResult?.text.toString().cleanUpMinusSign()
-
-    // Check and add a zero if leading zero is missing when decimal is used
-    if (tvCurrentResult?.text?.substring(0, 1) == DECIMAL_SEPARATOR) {
-        tvCurrentResult?.text = buildString {
-            append("0")
-            append(tvCurrentResult?.text)
-        }
-    }
-    // Replace 0.0 and -0 with zero only
-    if (tvCurrentResult?.text.toString() == "0" + DECIMAL_SEPARATOR + "0" || tvCurrentResult?.text.toString() == "−0")
-        tvCurrentResult?.text = "0"
-
-    // Replace all none minus characters with proper one
-    tvCurrentResult?.text = tvCurrentResult?.text.toString().cleanUpMinusSign()
-
-    // Fix if the formated double value is .0xxxxxx
-    Log.d("SOJO Debug:", "x" + tvCurrentResult?.text.toString() + "x" + tvCurrentResult?.text.toString().substring(0, 1))
-
-    if (tvCurrentResult?.text.toString()[0] == '.') {
-        tvCurrentResult?.text = tvCurrentResult?.text.toString().replace(".", "0$DECIMAL_SEPARATOR")
-    }
-
-    if (tvPreviousResult?.text.toString().substring(0, 3) == ".0 ") {
-        tvPreviousResult?.text = ""
-        tvCurrentResult?.text = "0"
+    } catch (e: Exception) {
         resetValues()
+        tvCurrentResult?.text = "0"
+        tvPreviousResult?.text = ""
+        clearEntry = false
+        Log.d(
+            "SOJO Debug:",
+            "catch2-> previous: " + tvPreviousResult?.text.toString() + "-x" + previousOperator.toString() + ", current: " + tvCurrentResult?.text.toString() + "-x" + currentOperator.toString()
+        )
     }
 
-    if (tvPreviousResult?.text.toString()[0] == '.') {
-        tvPreviousResult?.text = tvPreviousResult?.text.toString().replace(".", "0$DECIMAL_SEPARATOR")
+    if (tvCurrentResult?.text.toString() == "0" + DECIMAL_SEPARATOR + "0") {
+        tvCurrentResult?.text = "0"
     }
 
-    if (tvPreviousResult?.text.toString().contains(" .")) {
-        tvPreviousResult?.text = tvPreviousResult?.text.toString().replace(" .", " 0$DECIMAL_SEPARATOR")
+    try {
+        if (tvCurrentResult?.text.toString().substring(0, 1) == ".") {
+            tvCurrentResult?.text = tvCurrentResult?.text.toString().replace(
+                ".",
+                "0$DECIMAL_SEPARATOR"
+            )
+        }
+
+        if (tvPreviousResult?.text.toString().substring(0, 1) == ".") {
+            tvPreviousResult?.text = tvPreviousResult?.text.toString().replace(
+                ".",
+                "0$DECIMAL_SEPARATOR"
+            )
+        }
+
+        if (tvPreviousResult?.text.toString().contains("=")) {
+            Log.d("SOJO Debug:", tvPreviousResult?.text.toString().length.toString())
+
+            if (tvPreviousResult?.text.toString().substring(tvPreviousResult?.text.toString().length - 5, 8) == " .0 =" && secondValue == 0.0) {
+                tvPreviousResult?.text = tvPreviousResult?.text.toString().replace(
+                    ".",
+                    "0$DECIMAL_SEPARATOR"
+                ).replace("0" + DECIMAL_SEPARATOR + "0", "0")
+            }
+        }
+    } catch (e: Exception) {
+        // TODO: 6 x 0 = 6.0
+        tvPreviousResult?.text = firstDisplayValue + " " + Calculator.getOperatorSign(currentOperator) + " " + secondDisplayValue + " ="
+        tvCurrentResult?.text = result.toString()
+        Log.d(
+            "SOJO Debug:",
+            "catch3-> previous: " + tvPreviousResult?.text.toString() + "-x" + previousOperator.toString() + ", current: " + tvCurrentResult?.text.toString() + "-x" + currentOperator.toString()
+        )
     }
+
+    if (tvCurrentResult?.text.toString() == "0" + DECIMAL_SEPARATOR + "0") {
+        tvCurrentResult?.text = "0"
+    }
+    */
 
     adjustLabelFont(tvPreviousResult)
     adjustLabelFont(tvCurrentResult)

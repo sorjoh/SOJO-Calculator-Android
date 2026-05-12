@@ -84,18 +84,25 @@ class Calculator {
         }
 
         fun formatValue(input: String, forceFormat: Boolean = false): String {
+            Log.d("SOJO Debug:", "formatValue -> " + input + ", " + forceFormat.toString())
+
             return if (input.length > 1 && input.take(1) == "0" && !input.contains(DECIMAL_SEPARATOR)) {
-                input.cleanUpMinusSign().substring(1)
+                Log.d("SOJO Debug:", "formatValue -> IF START")
+                input.cleanUpMinusSign().substring(1).cleanUpZeroValue()
             } else if (input.contains(DECIMAL_SEPARATOR)) {
+                Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE IF")
                 if (forceFormat) {
+                    Log.d("SOJO Debug:", "formatValue -> IF 1")
                     val cleanupValue = input.replace(160.toChar().toString(),"")
-                    numberFormat.format(cleanupValue.cleanUpMinusSign().removeThousandSeparator().cleanUpDecimalSeparator().toDouble())
+                    numberFormat.format(cleanupValue.cleanUpMinusSign().removeThousandSeparator().cleanUpDecimalSeparator().toDouble()).cleanUpZeroValue()
                 } else {
-                    input.cleanUpMinusSign()
+                    Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE IF -> ELSE")
+                    input.cleanUpMinusSign().cleanUpZeroValue()
                 }
             } else {
+                Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE")
                 val cleanupValue = input.replace(160.toChar().toString(),"")
-                numberFormat.format(cleanupValue.cleanUpMinusSign().removeThousandSeparator().cleanUpDecimalSeparator().toDouble())
+                numberFormat.format(cleanupValue.cleanUpMinusSign().removeThousandSeparator().cleanUpDecimalSeparator().toDouble()).cleanUpZeroValue()
             }
         }
 
@@ -117,7 +124,7 @@ class Calculator {
                 Operator.CUBE_ROOT -> result = cbrt(firstValue)
                 Operator.RECIPROCAL -> result = 1 / firstValue
 
-                else -> Log.d("SOJO Debug:", "Case Else")
+                else -> Log.d("SOJO Debug:", "calculate -> Case Else")
             }
 
             return result

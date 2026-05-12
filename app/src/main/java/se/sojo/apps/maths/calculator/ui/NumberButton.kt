@@ -1,6 +1,7 @@
 package se.sojo.apps.maths.calculator.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.Button
 import se.sojo.apps.maths.calculator.core.Calculator.Companion.DECIMAL_SEPARATOR
@@ -44,6 +45,8 @@ fun MainActivity.setNumberButtons() {
 
 // ========= NUMBER BUTTON ACTIONS =========
 private fun MainActivity.numberButtonAction(btn: Button, motionEvent: MotionEvent): Boolean {
+    Log.d("SOJO Debug:", "numberButtonAction -> " + firstValue.toString() + ", " + secondValue.toString() + ", " + currentOperator.toString() + ", " + previousOperator.toString())
+
     when (motionEvent.action) {
         MotionEvent.ACTION_UP -> {
             // Reset the screen if a result has been calculated
@@ -56,7 +59,7 @@ private fun MainActivity.numberButtonAction(btn: Button, motionEvent: MotionEven
                     tvPreviousResult?.text = ""
                 } else {
                     tvPreviousResult?.text = buildString {
-                        append(Calculator.formatValue(firstValue.toString()))
+                        append(Calculator.formatValue(firstValue.toString(), true))
                         append(" ")
                         append(Calculator.getOperatorSign(currentOperator))
                     }

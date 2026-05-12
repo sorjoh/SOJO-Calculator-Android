@@ -3,6 +3,7 @@ package se.sojo.apps.maths.calculator.core
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.util.TypedValue
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
@@ -33,6 +34,15 @@ fun String.removeThousandSeparator(): String {
 
 fun String.cleanUpDecimalSeparator(): String {
     return this.replace(DECIMAL_SEPARATOR, ".")
+}
+
+fun String.cleanUpZeroValue(): String {
+    return if (this == ".0")
+            "0"
+        else if (this.substring(0, 1) == ".")
+            "0" + DECIMAL_SEPARATOR + this.substring(1)
+        else
+            this
 }
 
 // ========= FONT AUTO-RESIZE =========

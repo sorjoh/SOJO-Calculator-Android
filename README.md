@@ -7,3 +7,4 @@ This project is a simple calculator with some extra features developed for Andro
 ## Features
 - **Basic Mathematical Operations:** Addition, subtraction, multiplication, and division.
 - **Extra Functions:** Percentage calculation, square and cube root, power, pi, modulus, reciprocal and random number generator.
+- **Layout:** History and support for different screen sizes and orientation modes.

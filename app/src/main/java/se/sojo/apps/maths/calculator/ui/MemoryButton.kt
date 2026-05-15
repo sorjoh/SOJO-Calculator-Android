@@ -8,7 +8,6 @@ import se.sojo.apps.maths.calculator.MainActivity
 import se.sojo.apps.maths.calculator.R
 import se.sojo.apps.maths.calculator.core.Calculator
 import se.sojo.apps.maths.calculator.core.Calculator.Companion.DECIMAL_SEPARATOR
-import se.sojo.apps.maths.calculator.core.adjustLabelFont
 import se.sojo.apps.maths.calculator.core.cleanUpDecimalSeparator
 import se.sojo.apps.maths.calculator.core.cleanUpMinusSign
 import se.sojo.apps.maths.calculator.core.performHapticFeedback
@@ -87,7 +86,7 @@ private fun MainActivity.memoryButtonAction(btn: Button, motionEvent: MotionEven
                     tvCurrentResult?.text = tvCurrentResult?.text.toString().cleanUpMinusSign()
 
                     // Adjust the font size depending on how many numbers
-                    adjustLabelFont(tvCurrentResult)
+                    //adjustLabelFont(tvCurrentResult)
                 }
 
                 // === MEMORY STORE ===

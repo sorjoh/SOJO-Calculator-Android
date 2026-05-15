@@ -2,11 +2,13 @@ package se.sojo.apps.maths.calculator.core
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
-import android.util.Log
 import android.util.TypedValue
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -28,18 +30,21 @@ fun String.cleanUpMinusSign(): String {
     return this.replace("-", "-").replace("−", "-").replace("–", "-").replace("—", "-")
 }
 
+// Remove all thousand separators
 fun String.removeThousandSeparator(): String {
     return this.replace(THOUSAND_SEPARATOR, "")
 }
 
+// Replace all none "double compatible" decimal separators with a period
 fun String.cleanUpDecimalSeparator(): String {
     return this.replace(DECIMAL_SEPARATOR, ".")
 }
 
+// Fix . and .0 to 0.0
 fun String.cleanUpZeroValue(): String {
     return if (this == ".0")
             "0"
-        else if (this.substring(0, 1) == ".")
+        else if (this[0] == '.')
             "0" + DECIMAL_SEPARATOR + this.substring(1)
         else
             this
@@ -76,6 +81,7 @@ fun adjustLabelFont(targetLabel: TextView?, reset: Boolean = false) {
     }
 }
 
+// Haptic Feedback
 fun performHapticFeedback(btn: Button?, motionEvent: MotionEvent?): Boolean {
     when (motionEvent?.action) {
         MotionEvent.ACTION_DOWN -> {
@@ -92,6 +98,8 @@ fun performHapticFeedback(btn: Button?, motionEvent: MotionEvent?): Boolean {
     return false
 }
 
+
+// Get current locale information
 @Suppress("DEPRECATION")
 @SuppressLint("ObsoleteSdkInt")
 @RequiresApi(Build.VERSION_CODES.N)
@@ -102,3 +110,34 @@ fun getCurrentLocale(c: Context): Locale? {
         c.resources.configuration.locale
     }
 }
+
+// Set margin
+fun View.margin(left: Float? = null, top: Float? = null, right: Float? = null, bottom: Float? = null) {
+    layoutParams<android.view.ViewGroup.MarginLayoutParams> {
+        left?.run { leftMargin = dpToPx(this) }
+        top?.run { topMargin = dpToPx(this) }
+        right?.run { rightMargin = dpToPx(this) }
+        bottom?.run { bottomMargin = dpToPx(this) }
+    }
+}
+
+inline fun <reified T : ViewGroup.LayoutParams> View.layoutParams(block: T.() -> Unit) {
+    if (layoutParams is T) block(layoutParams as T)
+}
+
+fun View.dpToPx(dp: Float): Int = context.dpToPx(dp)
+fun Context.dpToPx(dp: Float): Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics).toInt()
+
+fun getScreenWidth(): Int {
+    return Resources.getSystem().displayMetrics.widthPixels
+}
+
+fun getScreenHeight(): Int {
+    return Resources.getSystem().displayMetrics.heightPixels
+}
+
+
+
+
+
+

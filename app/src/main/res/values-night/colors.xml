@@ -6,6 +6,9 @@
     <color name="colorDisplayBackground">#000000</color>
     <color name="colorDisplayText">#E3E3E3</color>
 
+    <color name="colorHistoryResultText">#C0C0C0</color>
+    <color name="colorHistoryResultDivider">#C0C0C0</color>
+
     <color name="colorNumberBtnBackground">#6D6D6D</color>
     <color name="colorNumberBtnText">#FFFFFF</color>
 

@@ -1,6 +1,7 @@
 package se.sojo.apps.maths.calculator.core
 
 import android.util.Log
+import se.sojo.apps.maths.calculator.MainActivity.Companion.DEBUG
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.math.PI
@@ -34,7 +35,7 @@ class Calculator {
         var THOUSAND_SEPARATOR: String = ","
 
         // Max length of the display numbers
-        const val MAX_LENGTH: Int = 17
+        const val MAX_LENGTH: Int = 24
 
         var numberFormat: NumberFormat = NumberFormat.getNumberInstance(Locale("en", "US"))
 
@@ -84,23 +85,28 @@ class Calculator {
         }
 
         fun formatValue(input: String, forceFormat: Boolean = false): String {
-            Log.d("SOJO Debug:", "formatValue -> " + input + ", " + forceFormat.toString())
+            if (DEBUG) Log.d("SOJO Debug:", "formatValue -> $input, $forceFormat")
 
             return if (input.length > 1 && input.take(1) == "0" && !input.contains(DECIMAL_SEPARATOR)) {
-                Log.d("SOJO Debug:", "formatValue -> IF START")
+                if (DEBUG) Log.d("SOJO Debug:", "formatValue -> IF START")
+
                 input.cleanUpMinusSign().substring(1).cleanUpZeroValue()
             } else if (input.contains(DECIMAL_SEPARATOR)) {
-                Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE IF")
+                if (DEBUG) Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE IF")
+
                 if (forceFormat) {
-                    Log.d("SOJO Debug:", "formatValue -> IF 1")
+                    if (DEBUG) Log.d("SOJO Debug:", "formatValue -> IF 1")
+
                     val cleanupValue = input.replace(160.toChar().toString(),"")
                     numberFormat.format(cleanupValue.cleanUpMinusSign().removeThousandSeparator().cleanUpDecimalSeparator().toDouble()).cleanUpZeroValue()
                 } else {
-                    Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE IF -> ELSE")
+                    if (DEBUG) Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE IF -> ELSE")
+
                     input.cleanUpMinusSign().cleanUpZeroValue()
                 }
             } else {
-                Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE")
+                if (DEBUG) Log.d("SOJO Debug:", "formatValue -> IF START -> ELSE")
+
                 val cleanupValue = input.replace(160.toChar().toString(),"")
                 numberFormat.format(cleanupValue.cleanUpMinusSign().removeThousandSeparator().cleanUpDecimalSeparator().toDouble()).cleanUpZeroValue()
             }
@@ -124,7 +130,7 @@ class Calculator {
                 Operator.CUBE_ROOT -> result = cbrt(firstValue)
                 Operator.RECIPROCAL -> result = 1 / firstValue
 
-                else -> Log.d("SOJO Debug:", "calculate -> Case Else")
+                else -> if (DEBUG) Log.d("SOJO Debug:", "calculate -> Case Else")
             }
 
             return result

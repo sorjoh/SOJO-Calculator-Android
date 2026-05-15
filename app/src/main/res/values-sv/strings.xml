@@ -38,8 +38,8 @@
     <string name="dot_char">.</string>
     <string name="toggle_sign">+/-</string>
     <string name="equal_sign">=</string>
-    <string name="clear_history">Clear History</string>
-    <string name="do_you_really_want_to_delete_all_history">Do you really want to delete all history?</string>
-    <string name="yes">YES</string>
-    <string name="no">NO</string>
+    <string name="clear_history">Rensa historik</string>
+    <string name="do_you_really_want_to_delete_all_history">Vill du verkligen ta bort all historik?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nej</string>
 </resources>

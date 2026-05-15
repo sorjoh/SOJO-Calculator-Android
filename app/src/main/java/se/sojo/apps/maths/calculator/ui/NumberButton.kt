@@ -7,9 +7,9 @@ import android.widget.Button
 import se.sojo.apps.maths.calculator.core.Calculator.Companion.DECIMAL_SEPARATOR
 import se.sojo.apps.maths.calculator.core.Calculator.Companion.MAX_LENGTH
 import se.sojo.apps.maths.calculator.MainActivity
+import se.sojo.apps.maths.calculator.MainActivity.Companion.DEBUG
 import se.sojo.apps.maths.calculator.R
 import se.sojo.apps.maths.calculator.core.Calculator
-import se.sojo.apps.maths.calculator.core.adjustLabelFont
 import se.sojo.apps.maths.calculator.core.performHapticFeedback
 
 // Number buttons
@@ -43,9 +43,11 @@ fun MainActivity.setNumberButtons() {
     btnDot?.setOnTouchListener { _, motionEvent -> numberButtonAction(btnDot!!, motionEvent) }
 }
 
-// ========= NUMBER BUTTON ACTIONS =========
+// ========= NUMBER BUTTON ACTIONS =========if (DEBUG)
 private fun MainActivity.numberButtonAction(btn: Button, motionEvent: MotionEvent): Boolean {
-    Log.d("SOJO Debug:", "numberButtonAction -> " + firstValue.toString() + ", " + secondValue.toString() + ", " + currentOperator.toString() + ", " + previousOperator.toString())
+    if (DEBUG) Log.d("SOJO Debug:",
+        "numberButtonAction -> $firstValue, $secondValue, $currentOperator, $previousOperator"
+    )
 
     when (motionEvent.action) {
         MotionEvent.ACTION_UP -> {
@@ -87,7 +89,7 @@ private fun MainActivity.numberButtonAction(btn: Button, motionEvent: MotionEven
             tvCurrentResult?.text = Calculator.formatValue(tvCurrentResult!!.text.toString())
 
             // Adjust the font and decrease it if needed
-            adjustLabelFont(tvCurrentResult)
+            //adjustLabelFont(tvCurrentResult)
 
             // Set the status of Clear Entry to false
             clearEntry = false

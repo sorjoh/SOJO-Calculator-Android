@@ -196,6 +196,8 @@ class MainActivity : ComponentActivity() {
                     )
 
                     setScreenValues(
+                        buttonDefaultTextSize = 24f,
+                        buttonSpecialTextSize = 36f,
                         historyResultTextSize = 28f,
                         previousResultTextSize = 40f,
                         currentResultTextSize = 72f,
@@ -213,6 +215,8 @@ class MainActivity : ComponentActivity() {
                     )
 
                     setScreenValues(
+                        buttonDefaultTextSize = 22f,
+                        buttonSpecialTextSize = 30f,
                         historyResultTextSize = 24f,
                         previousResultTextSize = 32f,
                         currentResultTextSize = 64f,
@@ -280,6 +284,8 @@ class MainActivity : ComponentActivity() {
                     )
 
                     setScreenValues(
+                        buttonDefaultTextSize = 24f,
+                        buttonSpecialTextSize = 36f,
                         historyResultTextSize = 24f,
                         previousResultTextSize = 36f,
                         currentResultTextSize = 64f,
@@ -298,6 +304,8 @@ class MainActivity : ComponentActivity() {
                     )
 
                     setScreenValues(
+                        buttonDefaultTextSize = 22f,
+                        buttonSpecialTextSize = 30f,
                         historyResultTextSize = 18f,
                         previousResultTextSize = 24f,
                         currentResultTextSize = 48f,
@@ -468,6 +476,8 @@ class MainActivity : ComponentActivity() {
 
     // Set the size of components matching the screen size
     private fun setScreenValues(
+        buttonDefaultTextSize: Float = 18f,
+        buttonSpecialTextSize: Float = 24f,
         historyResultTextSize: Float = 24f,
         previousResultTextSize: Float = 32f,
         currentResultTextSize: Float = 64f,
@@ -482,6 +492,46 @@ class MainActivity : ComponentActivity() {
         tvPreviousResult?.margin(bottom = previousResultBottomMargin)
         tvDivider?.margin(top = dividerTopMargin)
         tvDivider?.margin(bottom = dividerBottomMargin)
+
+        val btnFrame: LinearLayout = findViewById(R.id.button_frame)
+
+        // Loop through all layers and set buttons text size
+        for (i in 0 until btnFrame.childCount) {
+            val layoutLayer1 = btnFrame.getChildAt(i)
+
+
+            if (layoutLayer1 is LinearLayout) {
+                for (i in 0 until layoutLayer1.childCount) {
+                    val layoutLayer2 = layoutLayer1.getChildAt(i)
+
+
+                    if (layoutLayer2 is LinearLayout) {
+                        for (i in 0 until layoutLayer2.childCount) {
+                            val btn = layoutLayer2.getChildAt((i))
+
+                            if (btn is Button) {
+                                when (btn.text.toString()) {
+                                    resources.getString(R.string.multiply_sign),
+                                    resources.getString(R.string.divide_sign),
+                                    resources.getString(R.string.add_sign),
+                                    resources.getString(R.string.subtract_sign),
+                                    resources.getString(R.string.equal_sign) -> btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, buttonSpecialTextSize)
+                                    else -> btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, buttonDefaultTextSize)
+                                }
+                            }
+                        }
+                    } else {
+                        // First layer - Memory buttons
+                        val btn = layoutLayer1.getChildAt((i))
+
+                        if (btn is Button) {
+                            btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, buttonDefaultTextSize)
+
+                        }
+                    }
+                }
+            }
+        }
 
         val paramsResult =  layoutResult?.layoutParams as LinearLayout.LayoutParams
         paramsResult.weight = resultWeight

@@ -8,9 +8,13 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.core.view.WindowCompat
@@ -28,6 +32,7 @@ import se.sojo.apps.maths.calculator.core.physicalScreenRectDp
 import se.sojo.apps.maths.calculator.ui.setMemoryButtons
 import se.sojo.apps.maths.calculator.ui.setNumberButtons
 import se.sojo.apps.maths.calculator.ui.setOperationButtons
+import java.lang.Exception
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
@@ -36,7 +41,7 @@ import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     companion object {
-        const val DEBUG = false
+        const val DEBUG = true
     }
 
     // Number buttons
@@ -54,7 +59,8 @@ class MainActivity : ComponentActivity() {
 
     // Display
     var tvCurrentResult: TextView? = null
-    var tvHistoryResult: TextView? = null
+    //var tvHistoryResult: TextView? = null
+    var lvHistoryResult: ListView? = null
     var tvPreviousResult: TextView? = null
     var tvMemoryStatus: TextView? = null
     var tvDivider: View? = null
@@ -143,7 +149,8 @@ class MainActivity : ComponentActivity() {
         // Display
         tvCurrentResult = findViewById(R.id.tv_current_result)
         tvPreviousResult = findViewById(R.id.tv_previous_result)
-        tvHistoryResult = findViewById(R.id.tv_history_result)
+        //tvHistoryResult = findViewById(R.id.tv_history_result)
+        lvHistoryResult = findViewById(R.id.lv_history_result)
         tvMemoryStatus = findViewById(R.id.tv_memory_status)
 
         layoutResult = findViewById(R.id.Result)
@@ -160,11 +167,11 @@ class MainActivity : ComponentActivity() {
         // Initial values
         tvCurrentResult?.text = "0"
         tvPreviousResult?.text = ""
-        tvHistoryResult?.text = ""
+        //lvHistoryResult?.text = ""
         tvMemoryStatus?.visibility = View.GONE
 
         tvPreviousResult?.movementMethod = ScrollingMovementMethod()
-        tvHistoryResult?.movementMethod = ScrollingMovementMethod()
+        //tvHistoryResult?.movementMethod = ScrollingMovementMethod()
         tvCurrentResult?.movementMethod = ScrollingMovementMethod()
 
         tvDivider?.visibility = View.GONE
@@ -372,16 +379,87 @@ class MainActivity : ComponentActivity() {
         }
 
         //tvPreviousResult?.setTypeface(null, Typeface.BOLD)
-        tvHistoryResult?.setTypeface(null, Typeface.ITALIC)
+        //tvHistoryResult?.setTypeface(null, Typeface.ITALIC)
 
-        tvHistoryResult?.setOnLongClickListener{
+        // TODO: Change font style
+        //lvHistoryResult?.setTypeface(null, Typeface.ITALIC)
+
+        /*
+        tvHistoryResult?.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val layout = (v as TextView).layout
+                val x = event.x.toInt()
+                val y = event.y.toInt()
+                if (layout != null) {
+                    val line = layout.getLineForVertical(y)
+                    val offset = layout.getOffsetForHorizontal(line, x.toFloat())
+                    Log.d("SOJO Debug:", x.toString() + "x" + y.toString())
+                    try {
+                        val texts: Char =
+                            tvHistoryResult?.text!!.elementAt(offset) // .charAt(offset)
+                        Toast.makeText(
+                            this@MainActivity,
+                            "the offset are " + offset + "letter are " + texts,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "the error are " + e,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+            true
+        }
+        */
+
+
+        /*
+        var offset: Int = -1 //text position will be corrected when touching.
+
+        //tvHistoryResult?.setOnTouchListener { v, event ->
+        lvHistoryResult?.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+
+                    Log.d("SOJO Debug:", tvHistoryResult?.text.toString())
+
+                    val layout = (v as TextView).layout
+                    val x: Float = event.x + tvHistoryResult!!.scrollX
+                    val y: Float = event.y + tvHistoryResult!!.scrollY
+                    val line = layout.getLineForVertical(y.toInt())
+
+                    // Here is what you wanted:
+                    offset = layout.getOffsetForHorizontal(line, x).toInt()
+
+
+                    try {
+                        val text: Char = tvHistoryResult?.text!!.toString().elementAt(offset)
+
+                        Log.d("SOJO Debug:", "x=$x, y=$y, line=$line, offset=$offset, text=$text")
+                    } catch (e: Exception) {
+
+                    }
+
+
+                }
+            }
+            false
+        }
+        */
+
+        //tvHistoryResult?.setOnLongClickListener{
+        lvHistoryResult?.setOnLongClickListener{
             val builder = AlertDialog.Builder(this)
 
             builder.setTitle(getString(R.string.clear_history))
             builder.setMessage(getString(R.string.do_you_really_want_to_delete_all_history))
 
             builder.setPositiveButton(getString(R.string.yes)) { dialog, _ ->
-                tvHistoryResult?.text = ""
+                // TODO: clear history
+                //tvHistoryResult?.text = ""
                 history = ""
                 tvDivider?.visibility = View.GONE
                 dialog.dismiss()
@@ -402,7 +480,8 @@ class MainActivity : ComponentActivity() {
         if(savedInstanceState != null) {
             tvPreviousResult?.text = savedInstanceState.getString("PreviousResult")
             tvCurrentResult?.text = savedInstanceState.getString("CurrentResult")
-            tvHistoryResult?.text = savedInstanceState.getString("HistoryResult")
+            // TODO: get history
+            //tvHistoryResult?.text = savedInstanceState.getString("HistoryResult")
 
             hasResult = savedInstanceState.getBoolean("HasResult")
             hasMemoryStatus = savedInstanceState.getBoolean("HasMemoryStatus")
@@ -420,6 +499,7 @@ class MainActivity : ComponentActivity() {
                 tvMemoryStatus?.visibility = View.GONE
             }
 
+            /* TODO: SHOW / HIDE History
             if (tvHistoryResult?.text.toString().isNotBlank()) {
                 tvDivider?.visibility = View.VISIBLE
                 tvHistoryResult?.visibility = View.VISIBLE
@@ -427,6 +507,7 @@ class MainActivity : ComponentActivity() {
                 tvDivider?.visibility = View.GONE
                 tvHistoryResult?.visibility = View.GONE
             }
+            */
 
             previousOperator = when (savedInstanceState.getString("PreviousOperator")) {
                 "ADD" -> Calculator.Operator.ADD
@@ -486,7 +567,8 @@ class MainActivity : ComponentActivity() {
         dividerBottomMargin: Float = 0f,
         resultWeight: Float = 3f
     ) {
-        tvHistoryResult?.setTextSize(TypedValue.COMPLEX_UNIT_SP, historyResultTextSize)
+        // TODO: set history text size
+        //tvHistoryResult?.setTextSize(TypedValue.COMPLEX_UNIT_SP, historyResultTextSize)
         tvPreviousResult?.setTextSize(TypedValue.COMPLEX_UNIT_SP, previousResultTextSize)
         tvCurrentResult?.setTextSize(TypedValue.COMPLEX_UNIT_SP, currentResultTextSize)
         tvPreviousResult?.margin(bottom = previousResultBottomMargin)
@@ -537,13 +619,15 @@ class MainActivity : ComponentActivity() {
         paramsResult.weight = resultWeight
     }
 
+
     // Save values when rotating the screen
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState.putString("PreviousResult", tvPreviousResult?.text.toString())
         outState.putString("CurrentResult", tvCurrentResult?.text.toString())
-        outState.putString("HistoryResult", tvHistoryResult?.text.toString())
+        // TODO: save history
+        //outState.putString("HistoryResult", tvHistoryResult?.text.toString())
 
         outState.putBoolean("HasResult", hasResult)
         outState.putBoolean("HasMemoryStatus", hasMemoryStatus)

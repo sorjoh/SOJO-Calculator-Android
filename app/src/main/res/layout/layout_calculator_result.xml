@@ -40,6 +40,22 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <ListView
+                        android:id="@+id/lv_history_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:text="@string/default_history_result_text"
+                        android:textAlignment="textEnd"
+                        android:gravity="bottom|end"
+                        android:textSize="20sp"
+                        android:maxLines="7"
+                        android:scrollbars="vertical"
+                        android:scrollbarStyle="outsideInset"
+                        android:fadeScrollbars="false"
+                        android:textColor="@color/colorHistoryResultText"/>
+
+                    <!--
                     <TextView
                         android:id="@+id/tv_history_result"
                         android:layout_width="match_parent"
@@ -54,6 +70,7 @@
                         android:scrollbarStyle="outsideInset"
                         android:fadeScrollbars="false"
                         android:textColor="@color/colorHistoryResultText"/>
+                    -->
 
                     <View
                         android:id="@+id/tv_divider"

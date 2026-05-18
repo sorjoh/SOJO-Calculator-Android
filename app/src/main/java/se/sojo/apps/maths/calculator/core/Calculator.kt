@@ -2,11 +2,14 @@ package se.sojo.apps.maths.calculator.core
 
 import android.util.Log
 import se.sojo.apps.maths.calculator.MainActivity.Companion.DEBUG
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.math.PI
 import kotlin.math.cbrt
 import kotlin.math.pow
+import kotlin.math.round
 import kotlin.math.sqrt
 
 class Calculator {
@@ -36,6 +39,7 @@ class Calculator {
 
         // Max length of the display numbers
         const val MAX_LENGTH: Int = 24
+        const val maxDecimalsAndZeros = 10
 
         var numberFormat: NumberFormat = NumberFormat.getNumberInstance(Locale("en", "US"))
 
@@ -87,7 +91,7 @@ class Calculator {
         fun formatValue(input: String, forceFormat: Boolean = false): String {
             if (DEBUG) Log.d("SOJO Debug:", "formatValue -> $input, $forceFormat")
 
-            return if (input.length > 1 && input.take(1) == "0" && !input.contains(DECIMAL_SEPARATOR)) {
+            var result = if (input.length > 1 && input.take(1) == "0" && !input.contains(DECIMAL_SEPARATOR)) {
                 if (DEBUG) Log.d("SOJO Debug:", "formatValue -> IF START")
 
                 input.cleanUpMinusSign().substring(1).cleanUpZeroValue()
@@ -110,30 +114,93 @@ class Calculator {
                 val cleanupValue = input.replace(160.toChar().toString(),"")
                 numberFormat.format(cleanupValue.cleanUpMinusSign().removeThousandSeparator().cleanUpDecimalSeparator().toDouble()).cleanUpZeroValue()
             }
+
+            //Log.d("SOJO Debug:", round(result.tryParse()).toString())
+            //result = BigDecimal(result.tryParse()).setScale(10, RoundingMode.HALF_EVEN).toString()
+
+
+            //result = BigDecimal(result.tryParse()).setScale(2, RoundingMode.HALF_EVEN).toString()
+
+            return result
         }
 
         fun calculate(firstValue: Double, secondValue: Double, operation: Operator): Double {
-            var result = 0.0
+            var result = BigDecimal(0) //0.0
 
-            when (operation) {
-                Operator.ADD -> result = firstValue + secondValue
-                Operator.SUBTRACT -> result = firstValue - secondValue
-                Operator.MULTIPLY -> result = firstValue * secondValue
-                Operator.DIVIDE -> result = firstValue / secondValue
-                Operator.MODULO -> result = firstValue % secondValue
-                Operator.PERCENT -> result = firstValue / 100
-                Operator.SQUARE -> result = firstValue * firstValue
-                Operator.CUBE -> result = firstValue * firstValue * firstValue
-                Operator.PI -> result = PI
-                Operator.POWER -> result = firstValue.pow(secondValue)
-                Operator.SQUARE_ROOT -> result = sqrt(firstValue)
-                Operator.CUBE_ROOT -> result = cbrt(firstValue)
-                Operator.RECIPROCAL -> result = 1 / firstValue
+            try {
+                when (operation) {
+                    Operator.ADD -> result = BigDecimal(firstValue + secondValue).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
 
-                else -> if (DEBUG) Log.d("SOJO Debug:", "calculate -> Case Else")
+                    Operator.SUBTRACT -> result = BigDecimal(firstValue - secondValue).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.MULTIPLY -> result = BigDecimal(firstValue * secondValue).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.DIVIDE -> result = BigDecimal(firstValue / secondValue).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.MODULO -> result = BigDecimal(firstValue % secondValue).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.PERCENT -> result = BigDecimal(firstValue / 100).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.SQUARE -> result = BigDecimal(firstValue * firstValue).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.CUBE -> result =
+                        BigDecimal(firstValue * firstValue * firstValue).setScale(
+                            maxDecimalsAndZeros,
+                            RoundingMode.HALF_EVEN
+                        ).stripTrailingZeros()
+
+                    Operator.PI -> result =
+                        BigDecimal(PI).setScale(maxDecimalsAndZeros, RoundingMode.HALF_EVEN)
+                            .stripTrailingZeros()
+
+                    Operator.POWER -> result = BigDecimal(firstValue.pow(secondValue)).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.SQUARE_ROOT -> result = BigDecimal(sqrt(firstValue)).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.CUBE_ROOT -> result = BigDecimal(cbrt(firstValue)).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    Operator.RECIPROCAL -> result = BigDecimal(1 / firstValue).setScale(
+                        maxDecimalsAndZeros,
+                        RoundingMode.HALF_EVEN
+                    ).stripTrailingZeros()
+
+                    else -> if (DEBUG) Log.d("SOJO Debug:", "calculate -> Case Else")
+                }
+            } catch (e: Exception) {
+                if (DEBUG) Log.d("SOJO Debug:", "calculate -> catch")
             }
 
-            return result
+            return result.toDouble()
         }
     }
 }
